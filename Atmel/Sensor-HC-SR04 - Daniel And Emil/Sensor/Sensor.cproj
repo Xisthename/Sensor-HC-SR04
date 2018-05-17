@@ -574,6 +574,9 @@
     <Compile Include="src\drivers\hcsr04.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\drivers\state_machine_one.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\pin_mapper.c">
       <SubType>compile</SubType>
     </Compile>

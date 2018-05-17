@@ -99,6 +99,7 @@ C_SRCS +=  \
 ../src/drivers/console_driver.c \
 ../src/drivers/delay.c \
 ../src/drivers/hcsr04.c \
+../src/drivers/state_machine_one.c \
 ../src/pin_mapper.c \
 ../src/ASF/common/utils/stdio/write.c \
 ../src/ASF/common/services/serial/usart_serial.c \
@@ -131,6 +132,7 @@ src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.o \
 src/drivers/console_driver.o \
 src/drivers/delay.o \
 src/drivers/hcsr04.o \
+src/drivers/state_machine_one.o \
 src/pin_mapper.o \
 src/ASF/common/utils/stdio/write.o \
 src/ASF/common/services/serial/usart_serial.o \
@@ -156,6 +158,7 @@ src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.o \
 src/drivers/console_driver.o \
 src/drivers/delay.o \
 src/drivers/hcsr04.o \
+src/drivers/state_machine_one.o \
 src/pin_mapper.o \
 src/ASF/common/utils/stdio/write.o \
 src/ASF/common/services/serial/usart_serial.o \
@@ -181,6 +184,7 @@ src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.d \
 src/drivers/console_driver.d \
 src/drivers/delay.d \
 src/drivers/hcsr04.d \
+src/drivers/state_machine_one.d \
 src/pin_mapper.d \
 src/ASF/common/utils/stdio/write.d \
 src/ASF/common/services/serial/usart_serial.d \
@@ -206,6 +210,7 @@ src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.d \
 src/drivers/console_driver.d \
 src/drivers/delay.d \
 src/drivers/hcsr04.d \
+src/drivers/state_machine_one.d \
 src/pin_mapper.d \
 src/ASF/common/utils/stdio/write.d \
 src/ASF/common/services/serial/usart_serial.d \
@@ -239,6 +244,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

@@ -5,7 +5,7 @@
 */
 
 // defines pins numbers
-const int trigPin = 2;
+const int trigPin = 4;
 const int echoPin = 3;
 
 // defines variables

@@ -14,6 +14,8 @@ src\drivers\delay.c
 
 src\drivers\hcsr04.c
 
+src\drivers\state_machine_one.c
+
 src\pin_mapper.c
 
 src\ASF\common\utils\stdio\write.c
