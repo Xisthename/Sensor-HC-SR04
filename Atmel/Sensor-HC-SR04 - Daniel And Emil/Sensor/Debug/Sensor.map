@@ -108,6 +108,7 @@ errno               0x4               c:/program files (x86)/atmel/studio/7.0/to
 dist_max_ball_interval
                     0x4               src/drivers/state_machine_one.o
 current_state       0x1               src/drivers/state_machine_one.o
+next_state          0x1               src/drivers/state_machine_one.o
 dist_min_box_interval
                     0x4               src/drivers/state_machine_one.o
 ptr_get             0x4               src/ASF/common/utils/stdio/read.o
@@ -116,8 +117,6 @@ distanceToMove      0x4               src/drivers/state_machine_one.o
 stdio_base          0x4               src/ASF/common/utils/stdio/write.o
 dist_middle_sensor  0x4               src/drivers/state_machine_one.o
 dist_min_ball_interval
-                    0x4               src/drivers/state_machine_one.o
-driveForwardOrBackwards
                     0x4               src/drivers/state_machine_one.o
 dist_min_current_interval
                     0x4               src/drivers/state_machine_one.o
@@ -1658,10 +1657,8 @@ Discarded input sections
  .text.SetupIntervalls
                 0x00000000       0x78 src/drivers/state_machine_one.o
  .text.SensorMain
-                0x00000000       0x34 src/drivers/state_machine_one.o
+                0x00000000       0xb0 src/drivers/state_machine_one.o
  .data.gripSteelBallDistance
-                0x00000000        0x4 src/drivers/state_machine_one.o
- .data.reliableDistance
                 0x00000000        0x4 src/drivers/state_machine_one.o
  .bss.mov_counter
                 0x00000000        0x4 src/drivers/state_machine_one.o
@@ -1671,26 +1668,31 @@ Discarded input sections
                 0x00000000        0x4 src/drivers/state_machine_one.o
  .bss.detectSteelBallOrBox
                 0x00000000        0x4 src/drivers/state_machine_one.o
+ .bss.checkSamples
+                0x00000000        0x4 src/drivers/state_machine_one.o
+ .data.reliableDistance
+                0x00000000        0x4 src/drivers/state_machine_one.o
  .data.dist_min
                 0x00000000        0x4 src/drivers/state_machine_one.o
  .data.dist_max
                 0x00000000        0x4 src/drivers/state_machine_one.o
  .data.distanceFromPlattform
                 0x00000000        0x4 src/drivers/state_machine_one.o
- .debug_info    0x00000000      0x1ec src/drivers/state_machine_one.o
- .debug_abbrev  0x00000000       0x61 src/drivers/state_machine_one.o
+ .debug_info    0x00000000      0x227 src/drivers/state_machine_one.o
+ .debug_abbrev  0x00000000       0xa2 src/drivers/state_machine_one.o
+ .debug_loc     0x00000000       0x20 src/drivers/state_machine_one.o
  .debug_aranges
                 0x00000000       0x28 src/drivers/state_machine_one.o
  .debug_ranges  0x00000000       0x18 src/drivers/state_machine_one.o
  .debug_macro   0x00000000       0x11 src/drivers/state_machine_one.o
  .debug_macro   0x00000000      0x892 src/drivers/state_machine_one.o
- .debug_line    0x00000000       0x78 src/drivers/state_machine_one.o
- .debug_str     0x00000000     0x26f5 src/drivers/state_machine_one.o
+ .debug_line    0x00000000       0x92 src/drivers/state_machine_one.o
+ .debug_str     0x00000000     0x2703 src/drivers/state_machine_one.o
  .comment       0x00000000       0x5c src/drivers/state_machine_one.o
- .debug_frame   0x00000000       0x30 src/drivers/state_machine_one.o
+ .debug_frame   0x00000000       0x38 src/drivers/state_machine_one.o
  .ARM.attributes
                 0x00000000       0x33 src/drivers/state_machine_one.o
- COMMON         0x00000000       0x2c src/drivers/state_machine_one.o
+ COMMON         0x00000000       0x28 src/drivers/state_machine_one.o
  .group         0x00000000        0x8 src/pin_mapper.o
  .group         0x00000000        0x8 src/pin_mapper.o
  .group         0x00000000        0x8 src/pin_mapper.o
@@ -7489,6 +7491,7 @@ atexit                                            c:/program files (x86)/atmel/s
                                                   c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
 board_init                                        src/ASF/sam/boards/arduino_due_x/init.o
                                                   src/main.o
+checkSamples                                      src/drivers/state_machine_one.o
 cleanup_glue                                      c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc.a(lib_a-reent.o)
 console_init                                      src/drivers/console_driver.o
                                                   src/main.o
@@ -7513,7 +7516,6 @@ dist_min_box_interval                             src/drivers/state_machine_one.
 dist_min_current_interval                         src/drivers/state_machine_one.o
 distanceFromPlattform                             src/drivers/state_machine_one.o
 distanceToMove                                    src/drivers/state_machine_one.o
-driveForwardOrBackwards                           src/drivers/state_machine_one.o
 edge_detection                                    src/drivers/hcsr04.o
 errno                                             c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc.a(lib_a-reent.o)
                                                   c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc.a(lib_a-readr.o)
@@ -7566,6 +7568,7 @@ memset                                            c:/program files (x86)/atmel/s
                                                   c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libc.a(lib_a-findfp.o)
                                                   c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m/crt0.o
 mov_counter                                       src/drivers/state_machine_one.o
+next_state                                        src/drivers/state_machine_one.o
 pin_mapper                                        src/pin_mapper.o
                                                   src/main.o
                                                   src/drivers/hcsr04.o

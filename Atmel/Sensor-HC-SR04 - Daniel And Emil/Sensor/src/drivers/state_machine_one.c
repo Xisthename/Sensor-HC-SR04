@@ -7,13 +7,16 @@
  */ 
 
 /*Enum construct declares states */
-enum { 
+typedef enum { 
 	READ_SENSOR,
 	SENSOR_DETECTION,
 	NO_DETECTION,
 	GRIP_OBJECT,
 	CHECK_OBJECT
-} current_state;
+} state_t;
+
+state_t current_state;
+state_t next_state;
 
 int detectSteelBallOrBox = 0; // What object should be detected? 0 = SteelBall, 1 = Box
 int dist_middle_sensor;
@@ -40,7 +43,6 @@ int dist_min_current_interval; // Current minimum interval that is used which is
 int dist_max_current_interval; // Current maximum interval that is used which is different regarding the object
 
 int distanceToMove; // The distance that the robot has to move to be able to pick up an object
-int driveForwardOrBackwards; // 0 = drive forward, 1 = drive backwards
 
 void SetupIntervalls() {
 	dist_min_ball_interval = dist_min; // Sets the minimum interval for the steel ball
@@ -62,63 +64,59 @@ void SetupIntervalls() {
 	}
 }
 
-void SensorMain() {
-	current_state = READ_SENSOR; // Sets the state to read
+int checkSamples = 0; // TEMP
 
-	switch (current_state) {
-		case READ_SENSOR:
-			if (dist_middle_sensor <= dist_min && dist_middle_sensor >= dist_max) {
-				/* The object is within range of minimum and maximum distance */
-				current_state = SENSOR_DETECTION; // Switch state to detection
-				break;
-			}
-			current_state = NO_DETECTION; // Otherwise no object was detected and therefore switch state to no detection
-			break;
-		case SENSOR_DETECTION:
-			if (dist_middle_sensor >= dist_min_current_interval && dist_middle_sensor <= dist_max_current_interval) { 
-				/* The object is within range for getting reliable data */
-				distanceToMove = (dist_middle_sensor + distanceFromPlattform) - gripDistance;
-				current_state = GRIP_OBJECT;
-			}	
-			else if (dist_middle_sensor >= dist_min && dist_middle_sensor <= dist_max) {
-				/* The object is outside range for getting reliable data */
-				distanceToMove = (dist_middle_sensor + distanceFromPlattform) - reliableDistance; // Drives to 10 cm from the object to get more reliable data
-				current_state = READ_SENSOR;
-			}
-			
-			if (distanceToMove > 0) {
-				driveForwardOrBackwards = 0;
-			}
-			else {
-				driveForwardOrBackwards = 1;
-			}
-			break;
-		/*case NO_DETECTION:
-		rot_counter = rot_counter + 1;
-		
-		if (rot_counter >= 8)
-		{
-			//kör framåt 5,6 cm
-			mov_counter = mov_counter + 1;
-		if (mov_counter < 5)
-			{
-				//GG
-				//Kör och lämna luft i lådan
-			}
-		}
-		break;
+int SensorMain(int *found) {
+	current_state = READ_SENSOR; // Sets the current state to read
+	*found = -1;
 	
-		case GRIP_OBJECT :
-		//Sätt en flagga att man är rätt positionerad.
-		current_state = CHECK_OBJECT;
-		//pausa tasken
 	
-		break;
-	
-		//State för att kolla om objektet ligger kvar efter uppplockning
-		case CHECK_OBJECT :
-		//Implementeras i mån av tid
-		current_state = READ_SENSOR;
-		break;*/
+	if (checkSamples != 0) {
+		distanceToMove = (checkSamples + distanceFromPlattform) - gripDistance;
 	}
+	
+	
+	
+	
+	
+		switch (current_state) {
+			case READ_SENSOR:
+				if (checkSamples != 0) {
+					//The object is within range of minimum and maximum distance
+					*found = 1; // The object has been found
+					next_state = SENSOR_DETECTION; // Switch state to detection
+					break;
+				}
+				next_state = NO_DETECTION; // Otherwise no object was detected and therefore switch state to no detection
+				break;
+			case SENSOR_DETECTION:
+				distanceToMove = (dist_middle_sensor + distanceFromPlattform) - gripDistance;
+				next_state = GRIP_OBJECT;
+				break;
+			case NO_DETECTION:
+				rot_counter = rot_counter + 1;
+		
+				if (rot_counter >= 8)
+				{
+					//kör framåt 5,6 cm
+					mov_counter = mov_counter + 1;
+				if (mov_counter < 5)
+					{
+						//GG
+						//Kör och lämna luft i lådan
+					}
+				}
+				break;
+			case GRIP_OBJECT:
+				*found = 1;
+				next_state = CHECK_OBJECT;
+				//pausa taskena
+	
+				break;
+			case CHECK_OBJECT:
+				//Implementeras i mån av tid
+				next_state = READ_SENSOR;
+				break;
+		}
+		current_state = next_state;
 }
