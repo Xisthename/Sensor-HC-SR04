@@ -1,0 +1,4 @@
+etherwelcome
+Current pos: (172, 172)
+Current pos: (298, 278)
+First run, angle: 40, d: 82
